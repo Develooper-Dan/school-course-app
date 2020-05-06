@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
+import Header from "./Header";
+import Courses from "./Courses";
+import Error from "./Error";
 import axios from "axios";
 
 class App extends Component {
@@ -11,29 +14,51 @@ class App extends Component {
     // }
   }
 
-// handleRequest= () => {
-//     axios.get("http://localhost:5000/api/courses/")
-//       .then(response => {
-//           response.data.map( course => {
-//             return <li>{course.title}</li>
-//         })
-//       })
-//       .catch(error => {
-//         console.error('Error fetching and parsing data', error.toJSON());
-//       });
-//   }
+handleRequest= (url, method, stateName) => {
+    axios({
+      method,
+      url
+    })
+      .then(courses => {
+        this.setState({[stateName]: courses.data})
+      })
+      .catch(error => {
+        console.error('Error fetching and parsing data', error.toJSON());
+      });
+  }
 
   render(){
     return(
-    <div className="container">
       <Router>
-        <Switch>
-        <Route exact path="/">
+        <div>
+          <Header />
+          <hr />
+          <Switch>
+          <Route exact path="/" >
+            <Courses handleRequest ={this.handleRequest} />
+          </Route>
+          <Route path="/courses/create">
+          </Route>
 
-        </Route>
-        </Switch>
+          <Route path="/courses/:id">
+          </Route>
+
+          <Route path="/courses/:id/update">
+          </Route>
+
+          <Route path="/signup">
+          </Route>
+
+          <Route path="/signin">
+          </Route>
+
+          <Route path="/signout">
+          </Route>
+
+          <Route path="*" component= {Error} />
+          </Switch>
+        </div>
       </Router>
-    </div>
   )}
 }
 export default App;
