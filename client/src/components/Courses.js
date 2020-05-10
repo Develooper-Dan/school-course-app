@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from "axios";
+import {Context} from '../Context';
 
 class Courses extends Component {
   constructor(props) {
@@ -9,22 +9,9 @@ class Courses extends Component {
     };
   }
 
-  handleRequest= (url, method) => {
-      axios({
-        method,
-        url,
-        baseURL: 'http://localhost:5000/api/'
-      })
-        .then(courses => {
-            this.setState({courseList: courses.data})
-        })
-        .catch(error => {
-          console.error('Error fetching and parsing data', error.toJSON());
-        });
-    }
-
 
   componentDidMount(){
+    this.handleRequest = this.context.actions.handleRequest;
     this.handleRequest("courses/", "get")
   }
 
@@ -44,7 +31,7 @@ class Courses extends Component {
       <div className="bounds">
         {this.createCourseLayout(this.state.courseList)}
         <div className="grid-33">
-          <a className="course--module course--add--module" href="create-course.html">
+          <a className="course--module course--add--module" href="/courses/create">
             <h3 className="course--add--title">
               <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
                 viewBox="0 0 13 13" className="add">
@@ -56,4 +43,6 @@ class Courses extends Component {
       </div>
   )}
 }
-  export default Courses;
+
+Courses.contextType = Context
+export default Courses;
