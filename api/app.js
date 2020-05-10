@@ -13,8 +13,9 @@ app.use(morgan('dev'));
 app.use(express.json())
 //enables CORS for all origins
 app.use(function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', ['GET, HEAD, POST, DELETE, PUT']);
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', ['GET, HEAD, POST, DELETE, PUT'])
+  res.setHeader('Access-Control-Allow-Headers', '*')
   next();
 })
 // setup a friendly greeting for the root route
