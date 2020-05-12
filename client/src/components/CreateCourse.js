@@ -15,10 +15,11 @@ class CreateCourse extends Component {
         {context => {
           let updateInput = context.actions.updateInput.bind(this);
           let handleRequest = context.actions.handleRequest
+          let requestOptions = { url: "/courses", method: "post", data: this.state }
           return(
             <div className="bounds course--detail">
               <h1>Create Course</h1>
-              <form onSubmit={(e) => {e.preventDefault(); handleRequest(`/courses`, "post", this.state)}}>
+              <form onSubmit={(e) => {e.preventDefault(); handleRequest(requestOptions)}}>
                 <div className="grid-66">
                   <div className="course--header">
                     <h4 className="course--label">Course</h4>

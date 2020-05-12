@@ -5,7 +5,7 @@ class UserSignIn extends Component {
   constructor(props) {
     super(props);
     this.state= {
-      user: {}
+      userInput: {}
     };
   }
 
@@ -15,18 +15,19 @@ class UserSignIn extends Component {
       <Consumer>
         {context => {
           let updateInput = context.actions.updateInput.bind(this);
-          let handleRequest = context.actions.handleRequest
+          let signIn = context.actions.signIn;
+          let {emailAddress, password} = this.state.userInput;
           return(
             <div className="bounds">
               <div className="grid-33 centered signin">
                 <h1>Sign In</h1>
                 <div>
-                  <form onSubmit={(e) => {e.preventDefault(); handleRequest(`/users`, "get", this.state)}}>
+                  <form onSubmit={(e) => {e.preventDefault(); signIn(emailAddress, password)}}>
                     <div>
-                      <input id="emailAddress" name="emailAddress" type="text" className="" placeholder="Email Address" onChange= {updateInput}/>
+                      <input id="emailAddress" name="emailAddress" type="text" placeholder="Email Address" onChange= {updateInput}/>
                     </div>
                     <div>
-                      <input id="password" name="password" type="password" className="" placeholder="Password" onChange= {updateInput}/>
+                      <input id="password" name="password" type="password" placeholder="Password" onChange= {updateInput}/>
                     </div>
                     <div className="grid-100 pad-bottom">
                       <button className="button" type="submit">Sign In</button>

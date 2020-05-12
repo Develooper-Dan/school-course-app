@@ -13,8 +13,9 @@ class CourseDetail extends Component {
 
   componentDidMount(){
     let {id} = this.props.match.params;
+    let requestOptions = { url: `/courses/${id}`, method: "get" }
     this.handleRequest = this.context.actions.handleRequest;
-    this.handleRequest(`/courses/${id}`, "get")
+    this.handleRequest(requestOptions)
   }
 
 render(){
@@ -24,6 +25,7 @@ render(){
           let {course} = this.state;
           if(course){
             let {User} = course;
+            let requestOptions = { url: `/courses/${course.id}`, method: "delete" }
             return(
             <div>
               <div className="actions--bar">
@@ -31,7 +33,7 @@ render(){
                   <div className="grid-100">
                     <span>
                     <NavLink className="button" to={{pathname: `/courses/${course.id}/update`, state: this.state}}>Update Course</NavLink>
-                    <button className="button" onClick={() => this.handleRequest(`/courses/${course.id}`, "delete")}>Delete Course</button>
+                    <button className="button" onClick={() => this.handleRequest(requestOptions)}>Delete Course</button>
                     </span>
                     <a className="button button-secondary" href="/">Return to List</a>
                   </div>
