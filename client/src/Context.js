@@ -9,37 +9,35 @@ export class Provider extends Component {
     this.state= {
       authenticatedUser: {}
     };
+    this.signIn = this.signIn.bind(this);
+    this.signOut = this.signOut.bind(this)
   }
 
   updateInput(e) {
     e.persist();
     this.setState( prevState => {
+      let state = (Object.keys(prevState)[0])
       let key = e.target.name;
       return {
-        course: {
-          ...prevState.course,
+        [state]: {
+          ...prevState[state],
           [key]: e.target.value
         }
       }
     })
   }
 
-  handleRequest(url, method, data, withCredentials=false){
-    // if(withCredentials){
-    //
-    // }
+  handleRequest(options){
       axios({
-        method,
-        url,
-        data,
-        withCredentials,
-        auth,
+        ...options,
         baseURL: 'http://localhost:5000/api'
       })
-        .then(request => {
-          let key = Object.keys(this.state)[0]
-            method === 'delete' ? this.setState({[key]: {}})
-            : this.setState({[key]: request.data})
+        .then(response => {
+          if(response.status < 400){
+            let key = Object.keys(this.state)[0]
+            response.request.method === 'delete' ? this.setState({[key]: null})
+            : this.setState({[key]: response.data})
+          }
         })
         .catch(error => {
           if(error.response){
@@ -50,16 +48,25 @@ export class Provider extends Component {
         });
   }
 
-  signIn(email, password){
-    this.handleRequest('/users', 'get,' {email, password})
+  async signIn(email, password){
+    let requestOptions = { url: "/users", method: "get", auth: {username: email, password} }
+    this.handleRequest = this.handleRequest.bind(this)
+    await this.handleRequest(requestOptions);
+
+
+    this.setState({authenticatedUser.password: password})
+
   }
 
+  signOut(){
+    this.setState({authenticatedUser: null})
+  }
 
   render(){
     return(
       <Context.Provider  value= {
         {
-          actions: {handleRequest:this.handleRequest, updateInput: this.updateInput},
+          actions: {handleRequest: this.handleRequest, updateInput: this.updateInput, signIn: this.signIn},
           state: this.state
         }
       } >
