@@ -11,9 +11,9 @@ class Courses extends Component {
 
 
   componentDidMount(){
-    this.handleRequest = this.context.actions.handleRequest;
+    let handleRequest = this.context.actions.handleRequest
     let requestOptions = { url: "/courses", method: "get" }
-    this.handleRequest(requestOptions)
+    handleRequest(requestOptions, this)
   }
 
   createCourseLayout(courses){
