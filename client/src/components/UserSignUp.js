@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Consumer} from '../Context';
+import {NavLink} from "react-router-dom"
 
 class UserSignUp extends Component {
   constructor(props) {
@@ -14,13 +15,14 @@ class UserSignUp extends Component {
       <Consumer>
         {context => {
           let updateInput = context.actions.updateInput.bind(this);
-          let handleRequest = context.actions.handleRequest
+          let handleRequest = context.actions.handleRequest;
+          let requestOptions = {url: "/users", method: "post", data: this.state}
           return(
             <div className="bounds">
               <div className="grid-33 centered signin">
                 <h1>Sign Up</h1>
                 <div>
-                  <form onSubmit={(e) => {e.preventDefault(); handleRequest(`/users`, "post", this.state)}}>
+                  <form onSubmit={(e) => {e.preventDefault(); handleRequest(requestOptions, this)}}>
                     <div>
                       <input id="firstName" name="firstName" type="text" className="" placeholder="First Name" onChange= {updateInput} />
                     </div>
@@ -43,7 +45,7 @@ class UserSignUp extends Component {
                   </form>
                 </div>
                 <p>&nbsp;</p>
-                <p>Already have a user account? <a href="/signin">Click here</a> to sign in!</p>
+                <p>Already have a user account? <NavLink to='/signin'>Click here</NavLink> to sign in!</p>
               </div>
             </div>
           )

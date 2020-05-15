@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Consumer} from '../Context';
+import {NavLink} from "react-router-dom"
 
 class UserSignIn extends Component {
   constructor(props) {
@@ -36,7 +37,7 @@ class UserSignIn extends Component {
                   </form>
                 </div>
                 <p>&nbsp;</p>
-                <p>Don't have a user account? <a href="/signup">Click here</a> to sign up!</p>
+                <p>Don't have a user account?  <NavLink to='/signup'>Click here</NavLink> to sign up!</p>
               </div>
             </div>
           )
