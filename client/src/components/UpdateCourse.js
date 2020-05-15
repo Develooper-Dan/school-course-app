@@ -15,13 +15,13 @@ render(){
         let {course} = this.state;
         let {User} = course;
         let updateInput = context.actions.updateInput.bind(this);
-        let handleRequest = context.actions.handleRequest;
+        let handleRequest = context.actions.handleRequest
         let requestOptions = { url: `/courses/${course.id}`, method: "put", data: this.state }
       return(
       <div className="bounds course--detail">
         <h1>Update Course</h1>
         <div>
-          <form onSubmit={(e) => {e.preventDefault(); handleRequest(requestOptions)}}>
+          <form onSubmit={(e) => {e.preventDefault(); handleRequest(requestOptions, this)}}>
             <div className="grid-66">
               <div className="course--header">
                 <h4 className="course--label">Course</h4>
