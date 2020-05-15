@@ -7,7 +7,7 @@ export class Provider extends Component {
   constructor(props) {
     super(props);
     this.state= {
-      authenticatedUser: {}
+      authenticatedUser: null
     };
     this.signIn = this.signIn.bind(this);
     this.signOut = this.signOut.bind(this)
@@ -27,16 +27,17 @@ export class Provider extends Component {
     })
   }
 
-  handleRequest(options){
+  handleRequest(options, caller){
+    const response =
       axios({
         ...options,
         baseURL: 'http://localhost:5000/api'
       })
         .then(response => {
           if(response.status < 400){
-            let key = Object.keys(this.state)[0]
-            response.request.method === 'delete' ? this.setState({[key]: null})
-            : this.setState({[key]: response.data})
+            let key = Object.keys(caller.state)[0]
+            response.request.method === 'delete' ? caller.setState({[key]: null})
+            : caller.setState({[key]: response.data})
           }
         })
         .catch(error => {
@@ -46,16 +47,20 @@ export class Provider extends Component {
           console.error(error);
           }
         });
+      return response
   }
 
   async signIn(email, password){
     let requestOptions = { url: "/users", method: "get", auth: {username: email, password} }
     this.handleRequest = this.handleRequest.bind(this)
-    await this.handleRequest(requestOptions);
-
-
-    this.setState({authenticatedUser.password: password})
-
+    const response = await this.handleRequest(requestOptions, this)
+    if(response){
+      this.setState(prevState => {
+        return {
+          authenticatedUser: { ...prevState.authenticatedUser, password }
+        }
+      });
+    }
   }
 
   signOut(){
@@ -66,18 +71,14 @@ export class Provider extends Component {
     return(
       <Context.Provider  value= {
         {
-          actions: {handleRequest: this.handleRequest, updateInput: this.updateInput, signIn: this.signIn},
-          state: this.state
+          actions: {handleRequest: this.handleRequest, updateInput: this.updateInput, signIn: this.signIn, signOut: this.signOut},
+          authenticatedUser: this.state.authenticatedUser
         }
       } >
       {this.props.children}
       </Context.Provider>
     )
   }
-
-
-
-
 }
 
 export const Consumer = Context.Consumer;
