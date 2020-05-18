@@ -111,7 +111,7 @@ router.put("/courses/:id", asyncHandler(authentication), asyncHandler (async(req
       //this part checks if the keys send by the user are actually matching to the ones on the course instance the user tries to update
       let invalidKeys = [];
       Object.keys(req.body).forEach(key => {
-          if(!Object.keys(course.dataValues).includes(key)){
+          if(!Object.keys(course.dataValues).includes(key) && key !== "User"){
             invalidKeys.push(key);
           };
       });
