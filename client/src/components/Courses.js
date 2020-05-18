@@ -19,7 +19,7 @@ class Courses extends Component {
 
   createCourseLayout(courses){
     return courses.map(course =>
-      <div className="grid-33">
+      <div key={course.id} className="grid-33">
         <NavLink className="course--module course--link" to={`courses/${course.id}`}>
           <h4 className="course--label">Course</h4>
           <h3 className="course--title">{course.title}</h3>
