@@ -4,7 +4,7 @@ import {Consumer} from '../Context';
 class UpdateCourse extends Component {
   constructor(props) {
     super(props);
-    this.state = this.props.location.state;
+    this.state = this.props.routeProps.location.state;
   }
 
 
@@ -14,14 +14,15 @@ render(){
       {context => {
         let {course} = this.state;
         let {User} = course;
+        let {emailAddress, password} = context.authenticatedUser;
         let updateInput = context.actions.updateInput.bind(this);
         let handleRequest = context.actions.handleRequest
-        let requestOptions = { url: `/courses/${course.id}`, method: "put", data: this.state }
+        let requestOptions = { url: `/courses/${course.id}`, method: "put", data: course, auth: {username: emailAddress, password} }
       return(
       <div className="bounds course--detail">
         <h1>Update Course</h1>
         <div>
-          <form onSubmit={(e) => {e.preventDefault(); handleRequest(requestOptions, this)}}>
+          <form onSubmit={(e) => {e.preventDefault(); handleRequest(requestOptions, this) }}>
             <div className="grid-66">
               <div className="course--header">
                 <h4 className="course--label">Course</h4>
@@ -60,7 +61,7 @@ render(){
             </div>
             <div className="grid-100 pad-bottom">
             <button className="button" type="submit">Update Course</button>
-            <button className="button button-secondary" onClick={(e) => {e.preventDefault(); this.props.history.push(`/courses/${course.id}`)}}>Cancel</button>
+            <button className="button button-secondary" onClick={(e) => {e.preventDefault(); this.props.routeProps.history.push(`/courses/${course.id}`)}}>Cancel</button>
             </div>
           </form>
         </div>
