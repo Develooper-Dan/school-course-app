@@ -28,16 +28,16 @@ export class Provider extends Component {
   }
 
   handleRequest(options, caller){
-    const response =
+    return(
       axios({
         ...options,
         baseURL: 'http://localhost:5000/api'
       })
         .then(response => {
-          if(response.status < 400){
-            let key = Object.keys(caller.state)[0]
-            response.request.method === 'delete' ? caller.setState({[key]: null})
-            : caller.setState({[key]: response.data})
+          if(response.status < 400 && response.data){
+            let key = Object.keys(caller.state)[0];
+            caller.setState({[key]: response.data});
+            return response;
           }
         })
         .catch(error => {
@@ -46,13 +46,12 @@ export class Provider extends Component {
           } else {
           console.error(error);
           }
-        });
-      return response
+        })
+)
   }
 
   async signIn(email, password){
     let requestOptions = { url: "/users", method: "get", auth: {username: email, password} }
-    this.handleRequest = this.handleRequest.bind(this)
     const response = await this.handleRequest(requestOptions, this)
     if(response){
       this.setState(prevState => {
