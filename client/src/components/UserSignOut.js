@@ -1,11 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { useHistory } from "react-router-dom";
+import {Consumer} from '../Context';
 
-class UserSignOut extends Component {
-  // constructor() {
-  //   super();
-  //   this.state = {
-  //     searchInput: ""
-  //   }
+function UserSignOut (){
+  let history = useHistory();
+  return(
+    <Consumer>
+      {context => {
+        context.actions.signOut();
+        history.push("/");
+      }}
+    </Consumer>
+  )
 }
 
   export default UserSignOut;
