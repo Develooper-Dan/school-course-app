@@ -25,12 +25,9 @@ class App extends Component {
               <Courses />
             </Route>
 
-            <Route path="/courses/create" component= {CreateCourse} />
+            <PrivateRoute path="/courses/create" component= {CreateCourse} />
 
-            <PrivateRoute path="/courses/:id/update">
-              <UpdateCourse />
-              </PrivateRoute>
-            {/* <Route path="/courses/:id/update" component= {UpdateCourse} /> */}
+            <PrivateRoute path="/courses/:id/update" component= {UpdateCourse} />
 
             <Route path="/courses/:id" component= {CourseDetail} />
 
