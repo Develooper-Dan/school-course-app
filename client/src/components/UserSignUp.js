@@ -6,7 +6,7 @@ class UserSignUp extends Component {
   constructor(props) {
     super(props);
     this.state= {
-      user: {}
+      userInput: {}
     };
   }
 
@@ -16,7 +16,9 @@ class UserSignUp extends Component {
         {context => {
           let updateInput = context.actions.updateInput.bind(this);
           let handleRequest = context.actions.handleRequest;
-          let requestOptions = {url: "/users", method: "post", data: this.state}
+          let signIn = context.actions.signIn;
+          let {emailAddress, password} = this.state.userInput;
+          let requestOptions = {url: "/users", method: "post", data: this.state.userInput}
           return(
             <div className="bounds">
               <div className="grid-33 centered signin">
