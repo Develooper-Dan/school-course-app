@@ -13,9 +13,11 @@ class CreateCourse extends Component {
     return(
       <Consumer>
         {context => {
+          let {course} = this.state;
           let updateInput = context.actions.updateInput.bind(this);
-          let handleRequest = context.actions.handleRequest
-          let requestOptions = { url: "/courses", method: "post", data: this.state }
+          let handleRequest = context.actions.handleRequest;
+          let {emailAddress, password, firstName, lastName} = context.authenticatedUser;
+          let requestOptions = { url: "/courses", method: "post", data: course, auth: {username: emailAddress, password} }
           return(
             <div className="bounds course--detail">
               <h1>Create Course</h1>
@@ -26,7 +28,7 @@ class CreateCourse extends Component {
                     <div><input id="title" name="title" type="text" className="input-title course--title--input" placeholder="Course title..."
                         onChange= {updateInput} />
                     </div>
-                    <p>By ...</p>
+                    <p>By {firstName} {lastName}</p>
                   </div>
                   <div className="course--description">
                     <div>
@@ -52,7 +54,7 @@ class CreateCourse extends Component {
                 </div>
                 <div className="grid-100 pad-bottom">
                   <button className="button" type="submit">Create Course</button>
-                  <button className="button button-secondary" onClick= {(e) => {e.preventDefault(); this.props.history.push("/")}}>Cancel</button>
+                  <button className="button button-secondary" onClick= {(e) => {e.preventDefault(); this.props.routeProps.history.push("/")}}>Cancel</button>
                 </div>
               </form>
             </div>
