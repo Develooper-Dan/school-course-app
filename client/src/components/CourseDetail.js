@@ -25,17 +25,24 @@ render(){
           let {course} = this.state;
           if(course){
             let {User} = course;
-            let requestOptions = { url: `/courses/${course.id}`, method: "delete" }
+            let requestOptions = { url: `/courses/${course.id}`, method: "delete"}
+            if(context.authenticatedUser){
+              let {emailAddress, password} = context.authenticatedUser;
+              requestOptions.auth = {username: emailAddress, password}
+              let buttonElements =  (
+                <span>
+                  <NavLink className="button" to={{pathname: `/courses/${course.id}/update`, state: this.state}}>Update Course</NavLink>
+                  <button className="button" onClick={() => {this.handleRequest(requestOptions,this); this.props.history.push("/")}}>Delete Course</button>
+                </span>
+              )
+            }
             return(
             <div>
               <div className="actions--bar">
                 <div className="bounds">
                   <div className="grid-100">
-                    <span>
-                    <NavLink className="button" to={{pathname: `/courses/${course.id}/update`, state: this.state}}>Update Course</NavLink>
-                    <button className="button" onClick={() => this.handleRequest(requestOptions,this)}>Delete Course</button>
-                    </span>
-                    <a className="button button-secondary" href="/">Return to List</a>
+                    {buttonElements}
+                    <NavLink className="button button-secondary" to="/">Return to List</NavLink>
                   </div>
                 </div>
               </div>
