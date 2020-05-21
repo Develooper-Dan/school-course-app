@@ -8,6 +8,7 @@ module.exports = (sequelize) => {
       type: Sequelize.STRING,
       allowNull: false,
       validate:{
+        notNull: { msg: "Please enter a course title." },
         notEmpty: { msg: "Please enter a course title." },
       }
     },
@@ -15,6 +16,7 @@ module.exports = (sequelize) => {
       type: Sequelize.TEXT,
       allowNull: false,
       validate:{
+        notNull: { msg: "Please enter a description." },
         notEmpty: { msg: "Please enter a description." },
       }
     },
