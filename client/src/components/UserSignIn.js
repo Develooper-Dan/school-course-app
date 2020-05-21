@@ -23,7 +23,8 @@ class UserSignIn extends Component {
               <div className="grid-33 centered signin">
                 <h1>Sign In</h1>
                 <div>
-                  <form onSubmit={(e) => {e.preventDefault(); signIn(emailAddress, password)}}>
+                  {context.actions.createErrors(this.state.errors)}
+                  <form onSubmit={(e) => {e.preventDefault(); signIn(emailAddress, password, this)}}>
                     <div>
                       <input id="emailAddress" name="emailAddress" type="text" placeholder="Email Address" onChange= {updateInput}/>
                     </div>
