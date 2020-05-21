@@ -15,8 +15,7 @@ class UserSignUp extends Component {
       <Consumer>
         {context => {
           let updateInput = context.actions.updateInput.bind(this);
-          let handleRequest = context.actions.handleRequest;
-          let signIn = context.actions.signIn;
+          let {handleRequest, signIn} = context.actions;
           let {emailAddress, password} = this.state.userInput;
           let requestOptions = {url: "/users", method: "post", data: this.state.userInput}
           return(
@@ -24,7 +23,25 @@ class UserSignUp extends Component {
               <div className="grid-33 centered signin">
                 <h1>Sign Up</h1>
                 <div>
-                  <form onSubmit={(e) => {e.preventDefault(); handleRequest(requestOptions, this)}}>
+                  {context.actions.createErrors(this.state.errors)}
+                  <form onSubmit={async (e) => {
+                    e.preventDefault();
+                    const response = await handleRequest(requestOptions, this);
+
+                    let {password, confirmPassword} = this.state.userInput
+                    if(password !== confirmPassword){
+                      this.setState(prevState => {
+                        let error = "The passwords you entered don't match.";
+                        let errors = [...prevState.errors, error] || error;
+                        return{
+                          errors
+                        }
+                      })
+                    }
+                    if(response.status < 400 && !this.state.errors) {
+                      signIn(emailAddress, password, this);
+                    }
+                  }}>
                     <div>
                       <input id="firstName" name="firstName" type="text" className="" placeholder="First Name" onChange= {updateInput} />
                     </div>
