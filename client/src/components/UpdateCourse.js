@@ -22,6 +22,7 @@ render(){
       <div className="bounds course--detail">
         <h1>Update Course</h1>
         <div>
+          {context.actions.createErrors(this.state.errors)}
           <form onSubmit={(e) => {e.preventDefault(); handleRequest(requestOptions, this) }}>
             <div className="grid-66">
               <div className="course--header">
