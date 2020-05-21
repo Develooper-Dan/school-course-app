@@ -26,7 +26,7 @@ render(){
           if(course){
             let {User} = course;
             let buttonElements;
-            if(context.authenticatedUser && context.authenticatedUser.id === course.id){
+            if(context.authenticatedUser && context.authenticatedUser.id === course.userId){
               let {emailAddress, password} = context.authenticatedUser;
               let requestOptions = { url: `/courses/${course.id}`, method: "delete", auth: {username: emailAddress, password} }
 
