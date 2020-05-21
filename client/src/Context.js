@@ -37,30 +37,63 @@ export class Provider extends Component {
           if(response.status < 400 && response.data){
             let key = Object.keys(caller.state)[0];
             caller.setState({[key]: response.data});
-            return response;
           }
+          return response;
         })
         .catch(error => {
           if(error.response){
-          console.error(error.response.data.message, error.response);
+            let {message} = error.response.data;
+
+            if(!Object.is(caller, this)){
+              caller.setState({errors: message})
+            }
+            if(Array.isArray(message)){
+              message = message.join("\n")
+            }
+            console.error(message, "\n", error.response);
+            return error.response.data;
           } else {
-          console.error(error);
+              console.error(error);
           }
         })
 )
   }
 
-  async signIn(email, password){
+  async signIn(email, password, caller){
     let requestOptions = { url: "/users", method: "get", auth: {username: email, password} }
     const response = await this.handleRequest(requestOptions, this)
-    if(response){
+    if(response.status <400 ){
       this.setState(prevState => {
         return {
           authenticatedUser: { ...prevState.authenticatedUser, password }
         }
       });
     }
+    else {
+        caller.setState({errors: response.message})
+      }
   }
+
+createErrors(errors){
+  if(errors){
+    let errorList = <li>{errors}</li>
+    if(Array.isArray(errors)){
+        errorList = errors.map(error => <li key={errors.indexOf(error)}>{error}</li>);
+    }
+    return(
+      <div>
+        <h2 className="validation--errors--label">Validation errors</h2>
+        <div className="validation-errors">
+          <ul>
+            {errorList}
+          </ul>
+        </div>
+      </div>
+    )
+  } else {
+    return null
+  }
+}
 
   signOut(){
     this.setState({authenticatedUser: null})
@@ -70,7 +103,13 @@ export class Provider extends Component {
     return(
       <Context.Provider  value= {
         {
-          actions: {handleRequest: this.handleRequest, updateInput: this.updateInput, signIn: this.signIn, signOut: this.signOut},
+          actions: {
+            handleRequest: this.handleRequest,
+            updateInput: this.updateInput,
+            signIn: this.signIn,
+            signOut: this.signOut,
+            createErrors: this.createErrors
+          },
           authenticatedUser: this.state.authenticatedUser
         }
       } >
