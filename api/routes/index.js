@@ -4,6 +4,7 @@ const router = express.Router();
 const {User, Course} = require('../models').models;
 const bcrypt = require('bcryptjs');
 const auth = require('basic-auth');
+let error = {};
 /* Handler function to wrap each route which does async requests to the db.
 Catches any errors and forwards them to the error handler. With high regards to teamtreehouse.com where the
 idea for this function and in parts the code were part of a lecture.*/
@@ -19,6 +20,7 @@ function asyncHandler(cb){
 // Middleware for authenticating a user for certain routes, using basic auth
 async function authentication (req, res, next){
     if(auth(req)){
+      console.log(auth(req))
       const userEmail = auth(req).name;
       const user = await User.findOne(
         { where: {
@@ -31,14 +33,18 @@ async function authentication (req, res, next){
           req.user = user;
           next();
       } else {
-          res.status(401).json({
-            message: "Authentication failed. Please check if your email and password are correct",
-          });
+          error = {
+            status: 401,
+            message: "Authentication failed. Please check if your email and password are correct"
+          }
+          next(error);
         }
     } else {
-        res.status(401).json({
-          message: "Authentication needed. Please enter your email and password.",
-        });
+        error = {
+          status: 401,
+          message: "Authentication needed. Please enter your email and password"
+        }
+        next(error);
       }
 }
 // Returns the authenticated user, omitting sensitive or unneceassary information in the response
@@ -79,7 +85,7 @@ router.post("/courses", asyncHandler(authentication), asyncHandler (async(req, r
     res.status(201).location(`/courses/${course.id}`).end();
 }));
 // Returns a course with matching id, omitting sensitive or unneceassary information in the response. Throws an error if no course is found.
-router.get("/courses/:id", asyncHandler (async(req, res) =>{
+router.get("/courses/:id", asyncHandler (async(req, res, next) =>{
   const course = await Course.findOne({
     where: {
       id: req.params.id
@@ -91,7 +97,7 @@ router.get("/courses/:id", asyncHandler (async(req, res) =>{
     }
   });
   if(!course){
-    throw new Error("No entry found")
+    next()
   }
   res.json(course)
 }));
@@ -101,12 +107,15 @@ tries to set title and/or description to an empty string
 router.put("/courses/:id", asyncHandler(authentication), asyncHandler (async(req, res, next) =>{
     const course = await Course.findByPk(req.params.id);
     if(!course){
-      throw new Error("No entry found")
+      next()
     };
     if(course.userId === req.user.id){
       //checks if the request body is empty
       if(!Object.keys(req.body).length){
-        res.status(400).json({message: "The request contained no data to be updated"})
+        error = {
+          status: 400,
+          message: "The request contained no data to be updated"
+        }
       };
       //this part checks if the keys send by the user are actually matching to the ones on the course instance the user tries to update
       let invalidKeys = [];
@@ -116,26 +125,35 @@ router.put("/courses/:id", asyncHandler(authentication), asyncHandler (async(req
           };
       });
       if (invalidKeys.length){
-        res.status(400).json({message: `The request contained following invalid attributes: ${invalidKeys.join(", ")}`})
+        error = {
+          status: 400,
+          message: `The request contained following invalid attributes: ${invalidKeys.join(", ")}`
+        }
       }
       //finally updating if the data is ok
       await course.update(req.body);
       res.status(204).end();
     } else {
-      res.status(403).json({message: "You're not the registered owner of this course"})
+        error = {
+          status: 403,
+          message: "You're not the registered owner of this course"
+        }
     }
 }));
 //If the user is authenticated, he may delete the matching cours entry
 router.delete("/courses/:id", asyncHandler(authentication), asyncHandler (async(req, res, next) =>{
     const course = await Course.findByPk(req.params.id);
     if(!course){
-      throw new Error("No entry found")
+      next()
     }
     if(course.userId === req.user.id){
       await course.destroy();
       res.status(204).end();
     } else {
-      res.status(403).json({message: "You're not the registered owner of this course"})
+        error = {
+          status: 403,
+          message: "You're not the registered owner of this course"
+        }
     }
 }));
 
