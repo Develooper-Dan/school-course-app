@@ -50,8 +50,12 @@ export class Provider extends Component {
             if(Array.isArray(message)){
               message = message.join("\n")
             }
+            if(error.response){
+              console.log(caller.props.history)
+              caller.props.history.replace("/notfound", {from:})
+            }
             console.error(message, "\n", error.response);
-            return error.response.data;
+            return error.response;
           } else {
               console.error(error);
           }
