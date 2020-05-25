@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie'
 
 export const Context = React.createContext();
 
@@ -43,6 +44,7 @@ export class Provider extends Component {
         .catch(error => {
           if(error.response){
             let {message} = error.response.data;
+            let from = caller.props.location;
 
             if(!Object.is(caller, this)){
               caller.setState({errors: message})
@@ -50,10 +52,16 @@ export class Provider extends Component {
             if(Array.isArray(message)){
               message = message.join("\n")
             }
-            if(error.response){
-              console.log(caller.props.history)
-              caller.props.history.replace("/notfound", {from:})
+            switch(error.response.status){
+              case 404:
+              caller.props.history.replace("/notfound", {from});
+              break;
+
+              case 403:
+              caller.props.history.replace("/forbidden", {from});
+              break;
             }
+
             console.error(message, "\n", error.response);
             return error.response;
           } else {
@@ -72,6 +80,7 @@ export class Provider extends Component {
           authenticatedUser: { ...prevState.authenticatedUser, password }
         }
       });
+      Cookies.set("authenticatedUser", this.state.authenticatedUser)
     }
     else {
         caller.setState({errors: response.message})
