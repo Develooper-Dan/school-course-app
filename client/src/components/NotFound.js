@@ -1,7 +1,7 @@
 import React from 'react';
-import { useHistory } from "react-router-dom";
+
 // This component gets mounted if the user somehow requests a non-existing site
-const Error = (props) =>{
+const NotFound = (props) =>{
   let {history, location} = props
   let { from } = location.state
   return (
@@ -12,4 +12,4 @@ const Error = (props) =>{
     </div>
   )
 }
-export default Error
+export default NotFound
