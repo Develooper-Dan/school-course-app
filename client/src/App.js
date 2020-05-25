@@ -10,6 +10,7 @@ import UserSignIn from "./components/UserSignIn";
 import UserSignOut from "./components/UserSignOut";
 import PrivateRoute from "./components/PrivateRoute";
 import NotFound from "./components/NotFound";
+import Forbidden from "./components/Forbidden";
 
 class App extends Component {
 
@@ -35,6 +36,8 @@ class App extends Component {
             <Route path="/signin" component= {UserSignIn} />
 
             <Route path="/signout" component= {UserSignOut} />
+
+            <Route path="/forbidden" component= {Forbidden} />
 
             <Route path="/notfound" component= {NotFound} />
 
