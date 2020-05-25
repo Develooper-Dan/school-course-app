@@ -18,6 +18,7 @@ class UserSignIn extends Component {
           let updateInput = context.actions.updateInput.bind(this);
           let signIn = context.actions.signIn;
           let {emailAddress, password} = this.state.userInput;
+          // let{from} = this.props.location.state
           return(
             <div className="bounds">
               <div className="grid-33 centered signin">
