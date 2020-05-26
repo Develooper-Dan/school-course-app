@@ -33,7 +33,14 @@ render(){
               buttonElements =  (
                 <span>
                   <NavLink className="button" to={{pathname: `/courses/${course.id}/update`, state: this.state}}>Update Course</NavLink>
-                  <button className="button" onClick={() => {this.handleRequest(requestOptions,this); this.props.history.push("/")}}>Delete Course</button>
+                  <button className="button" onClick={() => {
+                    this.handleRequest(requestOptions,this)
+                      .then( response => {
+                        if(response){
+                          this.props.history.push("/");
+                        }
+                      })
+                    }} > Delete Course </button>
                 </span>
               )
             }
