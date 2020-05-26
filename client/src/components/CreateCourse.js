@@ -22,7 +22,13 @@ class CreateCourse extends Component {
             <div className="bounds course--detail">
               <h1>Create Course</h1>
               {context.actions.createErrors(this.state.errors)}
-              <form onSubmit={(e) => {e.preventDefault(); handleRequest(requestOptions, this)}}>
+              <form onSubmit={(e) => {e.preventDefault(); handleRequest(requestOptions, this)
+                .then( response => {
+                  if(response){
+                    this.props.history.push("/");
+                  }
+                })
+              }}>
                 <div className="grid-66">
                   <div className="course--header">
                     <h4 className="course--label">Course</h4>
