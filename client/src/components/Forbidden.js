@@ -3,6 +3,7 @@ import React from 'react';
 // This component gets mounted if the user somehow requests a non-existing site
 const Forbidden = (props) =>{
   let {history, location} = props
+  console.log(props)
   let { from } = location.state || {from}
   return (
     <div className="bounds">
