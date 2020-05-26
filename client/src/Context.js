@@ -8,7 +8,7 @@ export class Provider extends Component {
   constructor(props) {
     super(props);
     this.state= {
-      authenticatedUser: null
+      authenticatedUser: Cookies.getJSON("authenticatedUser") || null
     };
     this.signIn = this.signIn.bind(this);
     this.signOut = this.signOut.bind(this)
@@ -66,9 +66,10 @@ export class Provider extends Component {
             return error.response;
           } else {
               console.error(error);
+              caller.props.history.replace("/error");
           }
         })
-)
+      )
   }
 
   async signIn(email, password, caller){
@@ -80,10 +81,11 @@ export class Provider extends Component {
           authenticatedUser: { ...prevState.authenticatedUser, password }
         }
       });
-      Cookies.set("authenticatedUser", this.state.authenticatedUser)
+      Cookies.set("authenticatedUser", this.state.authenticatedUser, {secure: false});
+      return response;
     }
     else {
-        caller.setState({errors: response.message})
+      caller.setState({errors: response.data.message})
       }
   }
 
@@ -109,7 +111,8 @@ createErrors(errors){
 }
 
   signOut(){
-    this.setState({authenticatedUser: null})
+    this.setState({authenticatedUser: null});
+    Cookies.remove("authenticatedUser")
   }
 
   render(){
