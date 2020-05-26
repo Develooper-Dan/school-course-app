@@ -18,14 +18,19 @@ class UserSignIn extends Component {
           let updateInput = context.actions.updateInput.bind(this);
           let signIn = context.actions.signIn;
           let {emailAddress, password} = this.state.userInput;
-          // let{from} = this.props.location.state
+          let{from} = this.props.location.state
           return(
             <div className="bounds">
               <div className="grid-33 centered signin">
                 <h1>Sign In</h1>
                 <div>
                   {context.actions.createErrors(this.state.errors)}
-                  <form onSubmit={(e) => {e.preventDefault(); signIn(emailAddress, password, this)}}>
+                  <form onSubmit={(e) => {e.preventDefault(); signIn(emailAddress, password, this).then( user => {
+                    if(user){
+                      this.props.history.push(from);
+                    }
+                  })
+                  }} >
                     <div>
                       <input id="emailAddress" name="emailAddress" type="text" placeholder="Email Address" onChange= {updateInput}/>
                     </div>
