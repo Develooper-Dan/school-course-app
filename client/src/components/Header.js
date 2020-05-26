@@ -19,7 +19,10 @@ function Header(){
         } else {
           navElements = (
             <nav>
-              <NavLink to='/signup'>Sign Up</NavLink>
+              <NavLink to={{
+                pathname: "/signup",
+                state: { from: history.location.pathname }
+              }}>Sign Up</NavLink>
               <NavLink to={{
                 pathname: "/signin",
                 state: { from: history.location.pathname }
