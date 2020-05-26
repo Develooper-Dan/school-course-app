@@ -12,7 +12,11 @@ class UpdateCourse extends Component {
       let {id} = this.props.match.params;
       let requestOptions = { url: `/courses/${id}`, method: "get" }
       this.handleRequest = this.context.actions.handleRequest
-      this.handleRequest(requestOptions, this)
+      this.handleRequest(requestOptions, this).then(course => {
+        if(course.userId !== this.context.authenticatedUser.id){
+          this.props.history.replace("/forbidden")
+        }
+      })
     }
   }
 
