@@ -35,6 +35,9 @@ export class Provider extends Component {
         baseURL: 'http://localhost:5000/api'
       })
         .then(response => {
+          if(caller.state.errors){
+            caller.setState({errors: null})
+          }
           if(response.status < 400 && response.data){
             let key = Object.keys(caller.state)[0];
             caller.setState({[key]: response.data});
@@ -74,6 +77,7 @@ export class Provider extends Component {
 
   async signIn(email, password, caller){
     let requestOptions = { url: "/users", method: "get", auth: {username: email, password} }
+    let{from} = caller.props.location.state || {from: "/"}
     const response = await this.handleRequest(requestOptions, this)
     if(response.status <400 ){
       this.setState(prevState => {
@@ -82,7 +86,7 @@ export class Provider extends Component {
         }
       });
       Cookies.set("authenticatedUser", this.state.authenticatedUser, {secure: false});
-      return response;
+      caller.props.history.push(from);
     }
     else {
       caller.setState({errors: response.data.message})
