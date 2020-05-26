@@ -16,7 +16,7 @@ class UserSignUp extends Component {
         {context => {
           let updateInput = context.actions.updateInput.bind(this);
           let {handleRequest, signIn} = context.actions;
-          let {emailAddress, password} = this.state.userInput;
+          let {emailAddress, password, confirmPassword} = this.state.userInput;
           let requestOptions = {url: "/users", method: "post", data: this.state.userInput}
           return(
             <div className="bounds">
@@ -26,20 +26,13 @@ class UserSignUp extends Component {
                   {context.actions.createErrors(this.state.errors)}
                   <form onSubmit={async (e) => {
                     e.preventDefault();
-                    const response = await handleRequest(requestOptions, this);
-
-                    let {password, confirmPassword} = this.state.userInput
                     if(password !== confirmPassword){
-                      this.setState(prevState => {
-                        let error = "The passwords you entered don't match.";
-                        let errors = [...prevState.errors, error] || error;
-                        return{
-                          errors
-                        }
-                      })
-                    }
-                    if(response.status < 400 && !this.state.errors) {
-                      signIn(emailAddress, password, this);
+                      this.setState({errors: ["The passwords you entered don't match."]})
+                    } else {
+                        const response = await handleRequest(requestOptions, this);
+                        if(response.status < 400) {
+                          signIn(emailAddress, password, this);
+                      }
                     }
                   }}>
                     <div>
