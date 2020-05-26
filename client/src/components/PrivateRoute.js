@@ -9,14 +9,14 @@ export default function PrivateRoute({component: Component, ...props}){
         <Route {...props} render={props => {
           if(context.authenticatedUser){
             return (
-              <Component context= {context} routeProps= {props} />
+              <Component {...props} />
             )
           } else {
             return(
               <Redirect
                 to={{
                   pathname: "/signin",
-                  state: { from: props.location }
+                  state: { from: props.location.pathname }
                 }}
               />
             )}
