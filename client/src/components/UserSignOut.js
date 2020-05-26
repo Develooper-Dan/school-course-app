@@ -8,7 +8,7 @@ function UserSignOut (){
     <Consumer>
       {context => {
         context.actions.signOut();
-        history.push("/");
+        history.replace("/");
       }}
     </Consumer>
   )
