@@ -1,8 +1,9 @@
 import React from 'react';
-import {NavLink} from "react-router-dom"
+import {NavLink, useHistory} from "react-router-dom"
 import {Consumer} from '../Context';
 
 function Header(){
+  let history = useHistory();
   return(
     <Consumer>
       {context => {
@@ -19,7 +20,10 @@ function Header(){
           navElements = (
             <nav>
               <NavLink to='/signup'>Sign Up</NavLink>
-              <NavLink to='/signin'>Sign In</NavLink>
+              <NavLink to={{
+                pathname: "/signin",
+                state: { from: history.location.pathname }
+              }}>Sign In</NavLink>
             </nav>
           )
         }
