@@ -11,7 +11,7 @@ import UserSignOut from "./components/UserSignOut";
 import PrivateRoute from "./components/PrivateRoute";
 import NotFound from "./components/NotFound";
 import Forbidden from "./components/Forbidden";
-import Error from "./components/Error";
+import UnhandledError from "./components/UnhandledError";
 
 class App extends Component {
 
@@ -40,7 +40,7 @@ class App extends Component {
 
             <Route path="/forbidden" component= {Forbidden} />
 
-            <Route path="/error" component= {Error} />
+            <Route path="/error" component= {UnhandledError} />
 
             <Route path="/notfound" component= {NotFound} />
 
