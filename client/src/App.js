@@ -12,7 +12,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import NotFound from "./components/NotFound";
 import Forbidden from "./components/Forbidden";
 import UnhandledError from "./components/UnhandledError";
-
+// The App component sets up the basic React Router
 class App extends Component {
 
   render(){
@@ -22,10 +22,11 @@ class App extends Component {
           <Header />
           <hr />
           <Switch>
+
             <Route exact path="/" >
               <Courses />
             </Route>
-
+            //PrivateRoute is a HOC which prevents its wrapped components from being accessed by unauthenticated users
             <PrivateRoute path="/courses/create" component= {CreateCourse} />
 
             <PrivateRoute path="/courses/:id/update" component= {UpdateCourse} />
@@ -43,7 +44,7 @@ class App extends Component {
             <Route path="/error" component= {UnhandledError} />
 
             <Route path="/notfound" component= {NotFound} />
-
+            //non-existing routes land here and are redirected to the NotFound-page
             <Route path="*" render={({ location }) => (
               <Redirect to={{
                 pathname: "/notfound",

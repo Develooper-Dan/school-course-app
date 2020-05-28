@@ -1,7 +1,7 @@
 import React from 'react';
 import {Route, Redirect} from 'react-router-dom';
 import {Consumer} from '../Context';
-
+// Higher-order component which protects its components from being accessed by unauthenticated users
 export default function PrivateRoute({component: Component, ...props}){
   return (
     <Consumer>

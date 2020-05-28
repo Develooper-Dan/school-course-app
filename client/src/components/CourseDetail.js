@@ -10,7 +10,7 @@ class CourseDetail extends Component {
       course: null
     };
 }
-
+//Retrieving the selected course from the db
   componentDidMount(){
     let {id} = this.props.match.params;
     let requestOptions = { url: `/courses/${id}`, method: "get" }
@@ -23,16 +23,22 @@ render(){
       <Consumer>
         {context => {
           let {course} = this.state;
+          /*since componentDidMount causes a re-render and no course data will be available during the first render,
+          a check is necessary (rendering null in the first step) to prevent React from throwing an error
+          */
           if(course){
             let {User} = course;
             let buttonElements;
             if(context.authenticatedUser && context.authenticatedUser.id === course.userId){
               let {emailAddress, password} = context.authenticatedUser;
               let requestOptions = { url: `/courses/${course.id}`, method: "delete", auth: {username: emailAddress, password} }
-
+              //'Update' and 'Delete' buttons are only rendered if the user is the registered owner of this course
               buttonElements =  (
                 <span>
-                  <NavLink className="button" to={{pathname: `/courses/${course.id}/update`, state: this.state}}>Update Course</NavLink>
+                  <NavLink className="button" to= {{
+                    pathname: `/courses/${course.id}/update`, state: this.state
+                  }} > Update Course </NavLink>
+
                   <button className="button" onClick={() => {
                     this.handleRequest(requestOptions,this)
                       .then( response => {

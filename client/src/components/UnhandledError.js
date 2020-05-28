@@ -1,6 +1,6 @@
 import React from 'react';
 
-// This component gets mounted if the user somehow requests a non-existing site
+// This component gets mounted if a serverside error occurs
 const UnhandledError = (props) =>{
   return (
     <div className="bounds">

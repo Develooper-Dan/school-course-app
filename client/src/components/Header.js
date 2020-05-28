@@ -4,6 +4,7 @@ import {Consumer} from '../Context';
 
 function Header(){
   let history = useHistory();
+  //Links to the signIn /-out/-up routes and a welcome-message are displayed depending on the users logged in status
   return(
     <Consumer>
       {context => {

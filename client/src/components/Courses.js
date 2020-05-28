@@ -10,13 +10,13 @@ class Courses extends Component {
     };
   }
 
-
+//gets all courses from the db
   componentDidMount(){
     let handleRequest = this.context.actions.handleRequest
     let requestOptions = { url: "/courses", method: "get" }
     handleRequest(requestOptions, this)
   }
-
+//Returns the individual JSX for each course contained in this.state.courseList
   createCourseLayout(courses){
     return courses.map(course =>
       <div key={course.id} className="grid-33">

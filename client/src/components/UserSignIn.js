@@ -10,7 +10,7 @@ class UserSignIn extends Component {
     };
   }
 
-
+//Calls the signIn-method (see Context.js) with the users credentials and shows an error message if authentication failed.
   render(){
     return(
       <Consumer>
@@ -24,7 +24,7 @@ class UserSignIn extends Component {
                 <h1>Sign In</h1>
                 <div>
                   {context.actions.createErrors(this.state.errors)}
-                  <form onSubmit={(e) => {e.preventDefault(); signIn(emailAddress, password, this) }} >
+                  <form onSubmit={(e) => { e.preventDefault(); signIn(emailAddress, password, this) }} >
                     <div>
                       <input id="emailAddress" name="emailAddress" type="text" placeholder="Email Address" onChange= {updateInput}/>
                     </div>
@@ -33,7 +33,9 @@ class UserSignIn extends Component {
                     </div>
                     <div className="grid-100 pad-bottom">
                       <button className="button" type="submit">Sign In</button>
-                      <button className="button button-secondary" onClick={(e) => {e.preventDefault(); this.props.history.push("/")}}>Cancel</button>
+                      <button className="button button-secondary" onClick={(e) => {
+                        e.preventDefault(); this.props.history.push("/")
+                        }} > Cancel </button>
                     </div>
                   </form>
                 </div>

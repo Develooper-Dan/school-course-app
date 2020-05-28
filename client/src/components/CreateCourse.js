@@ -21,7 +21,9 @@ class CreateCourse extends Component {
           return(
             <div className="bounds course--detail">
               <h1>Create Course</h1>
+              {/* if there are any errors, they ould be displayed here */}
               {context.actions.createErrors(this.state.errors)}
+              {/* if the course was posted successfully the user gets redirected to the main route*/}
               <form onSubmit={(e) => {e.preventDefault(); handleRequest(requestOptions, this)
                 .then( response => {
                   if(response){
@@ -39,7 +41,7 @@ class CreateCourse extends Component {
                   </div>
                   <div className="course--description">
                     <div>
-                      <textarea id="description" name="description" className="" placeholder="Course description..." onChange= {updateInput}></textarea>
+                      <textarea id="description" name="description" placeholder="Course description..." onChange= {updateInput}></textarea>
                     </div>
                   </div>
                 </div>
@@ -54,14 +56,18 @@ class CreateCourse extends Component {
                       </li>
                       <li className="course--stats--list--item">
                         <h4>Materials Needed</h4>
-                        <div><textarea id="materialsNeeded" name="materialsNeeded" className="" placeholder="List materials..." onChange= {updateInput}></textarea></div>
+                        <div>
+                          <textarea id="materialsNeeded" name="materialsNeeded" placeholder="List materials..." onChange= {updateInput}></textarea>
+                        </div>
                       </li>
                     </ul>
                   </div>
                 </div>
                 <div className="grid-100 pad-bottom">
                   <button className="button" type="submit">Create Course</button>
-                  <button className="button button-secondary" onClick= {(e) => {e.preventDefault(); this.props.history.push("/")}}>Cancel</button>
+                  <button className="button button-secondary" onClick= {(e) => {
+                    e.preventDefault(); this.props.history.push("/")
+                    }} > Cancel </button>
                 </div>
               </form>
             </div>

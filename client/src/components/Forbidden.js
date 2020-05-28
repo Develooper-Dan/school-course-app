@@ -1,6 +1,6 @@
 import React from 'react';
 
-// This component gets mounted if the user somehow requests a non-existing site
+// This component gets mounted if the user is not the registered owner of a course he tries to update
 const Forbidden = (props) =>{
   let {history} = props
   return (

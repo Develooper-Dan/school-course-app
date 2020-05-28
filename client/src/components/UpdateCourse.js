@@ -6,7 +6,9 @@ class UpdateCourse extends Component {
     super(props);
     this.state = this.props.location.state || {course: null};
   }
-
+/*if there's no course received from this.props.location.state (i. e. the user tried to access this route directly via the URL)
+the requested course needs to be retrieved from the db and it needs to be checked if the user is actually this courses owner
+*/
   componentDidMount(){
     if(!this.state.course){
       let {id} = this.props.match.params;
@@ -19,7 +21,7 @@ class UpdateCourse extends Component {
       })
     }
   }
-
+//the handling is similar to the CourseDetail route
 render(){
   return(
     <Consumer>
@@ -36,7 +38,7 @@ render(){
               <h1>Update Course</h1>
               <div>
                 {context.actions.createErrors(this.state.errors)}
-                <form onSubmit={(e) => {e.preventDefault(); handleRequest(requestOptions, this) }}>
+                <form onSubmit={(e) => { e.preventDefault(); handleRequest(requestOptions, this) }}>
                   <div className="grid-66">
                     <div className="course--header">
                       <h4 className="course--label">Course</h4>
@@ -75,7 +77,9 @@ render(){
                   </div>
                   <div className="grid-100 pad-bottom">
                   <button className="button" type="submit">Update Course</button>
-                  <button className="button button-secondary" onClick={(e) => {e.preventDefault(); this.props.history.push(`/courses/${course.id}`)}}>Cancel</button>
+                  <button className="button button-secondary" onClick={(e) => {
+                    e.preventDefault(); this.props.history.push(`/courses/${course.id}`)
+                    }} > Cancel </button>
                   </div>
                 </form>
               </div>
