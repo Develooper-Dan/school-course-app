@@ -1,5 +1,5 @@
 # school-course-app
-This program couples a server-side REST API together with a client-side React frontend as its counterpart. Together they let a user perform basic CRUD-operations on a kind of "school"-database which contains several courses on different topics. A (short) documentation for the API-part can be found at https://github.com/Develooper-Dan/rest-api. Here I will focus on the React frontend.
+This program couples a server-side REST API together with a client-side React frontend as its counterpart. Together they let a user perform basic CRUD-operations on a kind of "school"-database which contains several courses on different topics. A (short) documentation for the API-part can be found at https://github.com/Develooper-Dan/rest-api. Here I will focus on the React frontend. The general layout and style of this app were provided by Team Treehouse.
 
 ### Getting started
 In the project directory, both of the following commands must be run in each of the api- and in the client-folder:
