@@ -9,7 +9,7 @@ class UserSignUp extends Component {
       userInput: {}
     };
   }
-
+//Eventually creates a new user entry in the db
   render(){
     return(
       <Consumer>
@@ -24,6 +24,9 @@ class UserSignUp extends Component {
                 <h1>Sign Up</h1>
                 <div>
                   {context.actions.createErrors(this.state.errors)}
+                  /* since there is no server-side validation for matching passwords the request is actually only made if
+                    the passwords match. Otherwise, the data might accidentally be submitted with an unintended password.
+                  */
                   <form onSubmit={async (e) => {
                     e.preventDefault();
                     if(password !== confirmPassword){
