@@ -14,8 +14,8 @@ the requested course needs to be retrieved from the db and it needs to be checke
       let {id} = this.props.match.params;
       let requestOptions = { url: `/courses/${id}`, method: "get" }
       this.handleRequest = this.context.actions.handleRequest
-      this.handleRequest(requestOptions, this).then(course => {
-        if(course.userId !== this.context.authenticatedUser.id){
+      this.handleRequest(requestOptions, this).then(response => {
+        if(response.data.userId !== this.context.authenticatedUser.id && response.status !== 404){
           this.props.history.replace("/forbidden")
         }
       })
@@ -31,14 +31,20 @@ render(){
           let {User} = course;
           let {emailAddress, password} = context.authenticatedUser;
           let updateInput = context.actions.updateInput.bind(this);
-          let handleRequest = context.actions.handleRequest
           let requestOptions = { url: `/courses/${course.id}`, method: "put", data: course, auth: {username: emailAddress, password} }
           return(
             <div className="bounds course--detail">
               <h1>Update Course</h1>
               <div>
                 {context.actions.createErrors(this.state.errors)}
-                <form onSubmit={(e) => { e.preventDefault(); handleRequest(requestOptions, this) }}>
+                <form onSubmit={(e) => {
+                  e.preventDefault();
+                  this.handleRequest(requestOptions, this).then( response => {
+                    if(response.status <400){
+                      this.props.history.push(`/courses/${course.id}`);
+                    }
+                  })
+                }}>
                   <div className="grid-66">
                     <div className="course--header">
                       <h4 className="course--label">Course</h4>
