@@ -42,7 +42,7 @@ render(){
                   <button className="button" onClick={() => {
                     this.handleRequest(requestOptions,this)
                       .then( response => {
-                        if(response){
+                        if(response.status <400){
                           this.props.history.push("/");
                         }
                       })
