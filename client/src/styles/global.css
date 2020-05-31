@@ -1,3 +1,11 @@
+
+@font-face {
+    font-family: 'startrackregular';
+    src: url('../fonts/startrack-axyog-webfont.woff2') format('woff2'),
+         url('../fonts/startrack-axyog-webfont.woff') format('woff'),
+         url('../fonts/startrack-axyog-webfont.ttf') format('ttf');
+}
+
 /* line 7, ../sass/reset.sass */
 a,
 abbr,
@@ -202,12 +210,16 @@ svg {
 /* line 5, ../sass/global.sass */
 body {
   font-family: "Work Sans", sans-serif;
-  background: #fff;
+  background-image: url("../image/a-photo-of-a-woman-sitting-on-brown-table.jpg");
+  background-attachment: fixed;
+  background-clip: padding-box;
+  background-size: 100vw;
+  background-repeat: no-repeat;
 }
 
 /* line 13, ../sass/global.sass */
 .header {
-  background: #57496e;
+  background: #4d443e;
   padding: 20px 0;
   margin-bottom: 30px;
 }
@@ -339,7 +351,7 @@ p {
 
 /* line 102, ../sass/global.sass */
 .course--module {
-  background: #7c689b;
+  background: #4d443e;
   border-radius: 8px;
   padding: 30px;
   margin-bottom: 30px;
@@ -376,6 +388,7 @@ p {
 .course--title {
   font-size: 18px;
   color: #fff;
+  font-family: "startrackregular", sans-serif;
 }
 /* line 126, ../sass/global.sass */
 .course--link {
@@ -428,7 +441,7 @@ p {
 /* line 164, ../sass/global.sass */
 .course--header .course--label {
   font-size: 18px;
-  color: #999;
+  color: #4d443e;
 }
 /* line 167, ../sass/global.sass */
 .course--header .course--title {
@@ -439,7 +452,7 @@ p {
 /* line 171, ../sass/global.sass */
 .course--header p {
   font-size: 18px;
-  color: #b1a5c4;
+  color: #4d443e;
   font-weight: 100;
 }
 /* line 176, ../sass/global.sass */
@@ -535,14 +548,14 @@ p {
   font-size: 18px;
   font-weight: 100;
   margin: 0 0 10px;
-  color: #999;
+  color: #fff;
   display: block;
 }
 /* line 287, ../sass/global.sass */
 .course--stats--list h4 {
   font-family: "Cousine";
   font-weight: 100;
-  color: #999;
+  color: #fff;
   font-size: 14px;
   padding: 0 0 10px;
   margin-bottom: 10px;
@@ -678,7 +691,7 @@ input:focus {
 
 /* line 507, ../sass/global.sass */
 .button {
-  background: #7c689b;
+  background: #4d443e;
   color: #fff;
   font-family: "Work Sans", sans-serif;
   font-size: 18px;
@@ -706,9 +719,9 @@ input:focus {
 
 /* line 525, ../sass/global.sass */
 .button-secondary {
-  color: #7c689b;
+  color: #4d443e;
   background: none;
-  box-shadow: 0 0 0 2px #7c689b inset;
+  box-shadow: 0 0 0 2px #4d443e inset;
   -webkit-transition: box-shadow 0.2s, color 0.2s;
   -moz-transition: box-shadow 0.2s, color 0.2s;
   -ms-transition: box-shadow 0.2s, color 0.2s;
@@ -719,6 +732,23 @@ input:focus {
 .button-secondary:hover {
   color: #63537d;
   box-shadow: 0 0 0 2px #63537d inset;
+}
+
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.error h1{
+  font-family: 'Parisienne', cursive, sans-serif;
+}
+
+.error button {
+  margin-top: 20px;
+  padding: 5px 10px 5px 10px;
+  border: 3px solid #d7dbdf;
+  font-size: 15px
 }
 
 /* adds additional padding to the bottom of an element */
