@@ -26,7 +26,7 @@ class App extends Component {
             <Route exact path="/" >
               <Courses />
             </Route>
-            //PrivateRoute is a HOC which prevents its wrapped components from being accessed by unauthenticated users
+            {/* PrivateRoute is a HOC which prevents its wrapped components from being accessed by unauthenticated users */}
             <PrivateRoute path="/courses/create" component= {CreateCourse} />
 
             <PrivateRoute path="/courses/:id/update" component= {UpdateCourse} />
@@ -44,7 +44,7 @@ class App extends Component {
             <Route path="/error" component= {UnhandledError} />
 
             <Route path="/notfound" component= {NotFound} />
-            //non-existing routes land here and are redirected to the NotFound-page
+            {/* non-existing routes land here and are redirected to the NotFound-page */}
             <Route path="*" render={({ location }) => (
               <Redirect to={{
                 pathname: "/notfound",
