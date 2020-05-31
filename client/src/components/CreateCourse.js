@@ -26,7 +26,7 @@ class CreateCourse extends Component {
               {/* if the course was posted successfully the user gets redirected to the main route*/}
               <form onSubmit={(e) => {e.preventDefault(); handleRequest(requestOptions, this)
                 .then( response => {
-                  if(response){
+                  if(response.status < 400){
                     this.props.history.push("/");
                   }
                 })
