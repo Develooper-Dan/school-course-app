@@ -294,7 +294,7 @@ h1 {
 
 /* line 61, ../sass/global.sass */
 a {
-  color: #7c689b;
+  color: #fff;
   cursor: pointer;
   text-decoration: none;
   -webkit-transition: color 0.2s;
@@ -359,6 +359,7 @@ p {
   display: block;
   position: relative;
   box-sizing: border-box;
+  transition: 0.3s;
 }
 /* line 2, ../sass/mixins.sass */
 .course--module:before, .course--module:after {
@@ -368,6 +369,13 @@ p {
 /* line 5, ../sass/mixins.sass */
 .course--module:after {
   clear: both;
+}
+
+.course--module:hover {
+  transform: scale(1.1);
+}
+.course--module:not(.course--add--module):hover {
+  background: #77695f;
 }
 /* line 112, ../sass/global.sass */
 .course--module--title {
@@ -387,7 +395,6 @@ p {
 /* line 123, ../sass/global.sass */
 .course--title {
   font-size: 18px;
-  color: #fff;
   font-family: "startrackregular", sans-serif;
 }
 /* line 126, ../sass/global.sass */
@@ -418,6 +425,7 @@ p {
   position: absolute;
   top: 50%;
   left: 50%;
+  transition: 0.3s;
   -webkit-transform: translate(-50%, -55%);
   -moz-transform: translate(-50%, -55%);
   -ms-transform: translate(-50%, -55%);
@@ -441,18 +449,18 @@ p {
 /* line 164, ../sass/global.sass */
 .course--header .course--label {
   font-size: 18px;
-  color: #4d443e;
+  color: #b8b7c4;
 }
 /* line 167, ../sass/global.sass */
 .course--header .course--title {
   font-size: 48px;
   margin-bottom: 15px;
-  color: #332a40;
+  color: #000;
 }
 /* line 171, ../sass/global.sass */
 .course--header p {
   font-size: 18px;
-  color: #4d443e;
+  color: #b8b7c4;
   font-weight: 100;
 }
 /* line 176, ../sass/global.sass */
@@ -473,7 +481,8 @@ p {
 .course--description p {
   font-size: 16px;
   line-height: 1.8;
-  color: #444;
+  color: #fff;
+  text-shadow: 2px 1px 2px #000;
 }
 /* line 195, ../sass/global.sass */
 .course--description ol,
@@ -570,10 +579,12 @@ p {
 .course--stats--list h3 {
   font-family: "Work Sans", sans-serif;
   font-size: 18px;
+  text-shadow: 2px 1px 2px #000;
 }
 /* line 303, ../sass/global.sass */
 .course--stats--list > li {
   margin-bottom: 50px;
+  color: #b8b7c4;
 }
 /* line 305, ../sass/global.sass */
 .course--stats--list > li ul {
@@ -583,6 +594,7 @@ p {
 .course--stats--list > li li {
   margin-bottom: 15px;
   list-style-type: circle;
+  text-shadow: 2px 1px 2px #000;
 }
 /* line 311, ../sass/global.sass */
 .course--time--input {
@@ -714,13 +726,13 @@ input:focus {
 }
 /* line 522, ../sass/global.sass */
 .button:not(.button-secondary):hover {
-  background: #63537d;
+  background: #8f6d1f;
 }
 
 /* line 525, ../sass/global.sass */
 .button-secondary {
   color: #4d443e;
-  background: none;
+  background-color: #fff;
   box-shadow: 0 0 0 2px #4d443e inset;
   -webkit-transition: box-shadow 0.2s, color 0.2s;
   -moz-transition: box-shadow 0.2s, color 0.2s;
@@ -730,8 +742,8 @@ input:focus {
 }
 /* line 530, ../sass/global.sass */
 .button-secondary:hover {
-  color: #63537d;
-  box-shadow: 0 0 0 2px #63537d inset;
+  color: #8f6d1f;
+  box-shadow: 0 0 0 2px #8f6d1f inset;
 }
 
 .error {
@@ -769,15 +781,22 @@ input:focus {
 
 /* styles the validation errors */
 .validation--errors--label {
-  color: #7c689b;
+  color: #c8dd33;
   font-size: 28px;
 }
 .validation-errors ul {
-  color: #7c689b;
+  color: #c8dd33;
   padding: 15px 0 40px 10px;
 }
 
 /* reduce bottom margin on the course description textarea element */
 .course--description textarea {
   margin-bottom: 20px;
+}
+
+@media only screen and (max-width: 1200px)  {
+  body {
+    background-clip: border-box;
+    background-size: cover;
+  }
 }
