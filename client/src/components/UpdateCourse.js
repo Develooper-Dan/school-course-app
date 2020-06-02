@@ -13,8 +13,7 @@ the requested course needs to be retrieved from the db and it needs to be checke
     if(!this.state.course){
       let {id} = this.props.match.params;
       let requestOptions = { url: `/courses/${id}`, method: "get" }
-      this.handleRequest = this.context.actions.handleRequest
-      this.handleRequest(requestOptions, this).then(response => {
+      this.context.actions.handleRequest(requestOptions, this).then(response => {
         if(response.data.userId !== this.context.authenticatedUser.id && response.status !== 404){
           this.props.history.replace("/forbidden")
         }
@@ -31,6 +30,7 @@ render(){
           let {User} = course;
           let {emailAddress, password} = context.authenticatedUser;
           let updateInput = context.actions.updateInput.bind(this);
+          let handleRequest = context.actions.handleRequest;
           let requestOptions = { url: `/courses/${course.id}`, method: "put", data: course, auth: {username: emailAddress, password} }
           return(
             <div className="bounds course--detail">
@@ -39,7 +39,7 @@ render(){
                 {context.actions.createErrors(this.state.errors)}
                 <form onSubmit={(e) => {
                   e.preventDefault();
-                  this.handleRequest(requestOptions, this).then( response => {
+                  handleRequest(requestOptions, this).then( response => {
                     if(response.status <400){
                       this.props.history.push(`/courses/${course.id}`);
                     }
