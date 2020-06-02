@@ -19,7 +19,7 @@ function asyncHandler(cb){
 }
 // Middleware for authenticating a user for certain routes, using basic auth
 async function authentication (req, res, next){
-    if(!auth(req).name ==="" && !auth(req).pass ==="" ){
+    if(auth(req).name && auth(req).pass){
       const userEmail = auth(req).name;
       const user = await User.findOne(
         { where: {
