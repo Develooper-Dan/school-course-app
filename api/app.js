@@ -3,13 +3,16 @@
 // load modules
 const express = require('express');
 const morgan = require('morgan');
-
+const path = require('path');
 // create the Express app
 const app = express();
 
 const indexRouter = require('./routes/index');
 // setup morgan which gives us http request logging
 app.use(morgan('dev'));
+//serve the client files for deployment on heroku
+app.use(express.static(path.join(__dirname, '../client/build')));
+
 app.use(express.json())
 //enables CORS for all origins
 app.use(function (req, res, next) {
@@ -27,6 +30,10 @@ app.get('/', (req, res) => {
 
 // API-routes are handled in a separate module
 app.use('/api', indexRouter);
+//serves the index.html from the client. Needed for heroku deployment
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
 
 // send 404 if no other route matched
 app.use((req, res) => {
