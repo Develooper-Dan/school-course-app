@@ -39,7 +39,7 @@ as well as a reference to the component which calls it.
     return(
       axios({
         ...options,
-        baseURL: '/api'
+        baseURL: 'http://localhost:5000/api'
       })
         .then(response => {
           //all exisiting validation errors are deleted since the request would eventually throw new ones anyway
